@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python3 setup.py test
-python3 setup.py sdist
-pip wheel --no-deps -w dist .
-twine upload dist/*
+python3 -m pip install --upgrade build
+python3 -m build
+python3 -m pip install --upgrade twine
+python3 -m twine upload dist/*
