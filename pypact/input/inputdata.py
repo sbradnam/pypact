@@ -73,7 +73,7 @@ class InputData(JSONSerializable):
         self._ignoreuncert          = False
         self._enablemonitor         = False
         self._usecumfissyield       = False
-        self._usefissyield            = False
+        self._usefissyield          = False
         self._clearancedata         = False
         self._loglevel              = LOG_SEVERITY_WARNING
         
