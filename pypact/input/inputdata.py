@@ -319,10 +319,6 @@ class InputData(JSONSerializable):
         if self._usecumfissyield:
             addcomment("use cumulative fission yield data mt=459 instead of mt=454")
             addkeyword('CUMFYLD')
-
-        if self._usefissyield:
-            addcomment("use fission data")
-            addkeyword('USEFISSION')
             
         if self._enablemonitor:
             addcomment("monitor FISPACT-II progress")
@@ -374,6 +370,10 @@ class InputData(JSONSerializable):
         if self._outputhazards:
             addcomment("output ingestion and inhalation values")
             addkeyword('HAZARDS')
+
+        if self._usefissyield:
+            addcomment("use fission data")
+            addkeyword('USEFISSION')
 
         if self._clearancedata:
             addcomment("include clearance data of radionuclides to be input")
