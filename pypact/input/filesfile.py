@@ -211,6 +211,7 @@ class FilesFile(JSONSerializable):
 
     def setFissionYield(self, type):
         self._setVar(type, 'fy_endf')
+        self._setVar(type, 'sf_endf')
 
     def setDecay(self, type):
         key = 'dk_endf'
