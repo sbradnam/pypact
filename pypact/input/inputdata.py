@@ -67,6 +67,7 @@ class InputData(JSONSerializable):
         self._approxgamma           = False
         self._outputhalflife        = False
         self._outputhazards         = False
+        self._overacross            = False
         self._initialinventory      = False
         self._readgammagroup        = False
         self._readspontfission      = False
@@ -101,6 +102,10 @@ class InputData(JSONSerializable):
         # cooling schedule
         # a list of time interval in seconds
         self._coolingschedule = []
+
+        # over-across cross sections
+        # a list of tuples of (over, across, xs)
+        self._overacrossxs = []
     
     def reset(self):
         """
@@ -276,6 +281,19 @@ class InputData(JSONSerializable):
         
     def clearElements(self):
         self._inventorymass.entries = []
+
+    def addOverAcross(self, over, across, xs):
+        """
+            Add an over-across cross section
+            over: the over value, e.g. 1.0E-3
+            across: the across value, e.g. 1.0E-3
+            xs: the cross section value, e.g. 1.0E-3
+        """
+        self._overacross = True
+        self._overacrossxs.append((over.upper(), across.upper(), xs))
+
+    def clearOverAcross(self):
+        self._overacrossxs = []
     
     def _serialize(self, f):
         """
@@ -400,6 +418,12 @@ class InputData(JSONSerializable):
         if self._initialinventory:
             addcomment("output the initial inventory")
             addkeyword('ATOMS')
+
+        if self._overacross:
+            addcomment("set over-across cross sections")
+            for over, across, xs in self._overacrossxs:
+                addkeyword('OVER', args=[f"{over}"])
+                addkeyword(' ACROSS', args=[f"{across}", f"{xs:.{self._prec}E}"])
 
         # inventory phase
         addnewline()
